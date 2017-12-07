@@ -2,9 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\PromoCode */
+/* @var $model frontend\models\PromoCode */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Promo Codes', 'url' => ['index']];
@@ -15,7 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <? if ($model->status == true) 
+            echo Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) 
+        ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -28,12 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'title',
             'start_date',
             'end_date',
             'reward',
-            'status',
+            [
+                'label' => 'Тарифная зона', 
+                'format' => 'raw',
+                'value' => implode('<br> ', ArrayHelper::map($model->cities, 'id', 'title'))
+            ],
+            ['attribute' => 'status', 'value'=> (($model->status == true)?'Активен':'Не активен')],
         ],
     ]) ?>
 

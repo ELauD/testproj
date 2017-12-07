@@ -4,10 +4,12 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\PromoCode;
+use frontend\models\City;
 use frontend\models\PromoZone;
 use frontend\models\PromoSearchCode;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
 /**
@@ -136,6 +138,10 @@ class PromoCodeController extends Controller
 
 
         $promoCodeModel = $this->findModel($id);
+
+        if ($promoCodeModel->status == false) {
+            throw new ForbiddenHttpException('Access denied');
+        }
         // $promoZonesModel = $promoCodeModel->getZones();
         $promoZoneModels = $promoCodeModel->zones;
         $promoZoneModel = new PromoZone();

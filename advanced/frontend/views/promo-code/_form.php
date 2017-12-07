@@ -4,6 +4,7 @@ use frontend\models\City;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $promoCodeModel app\models\PromoCode */
@@ -17,9 +18,24 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($promoCodeModel, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($promoCodeModel, 'start_date')->textInput() ?>
+    <?= $form->field($promoCodeModel, 'start_date')->widget(DatePicker::classname(), [
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-mm-dd',
+        ]
+    ]);
+    
+    //= $form->field($promoCodeModel, 'start_date')->textInput() ?>
 
-    <?= $form->field($promoCodeModel, 'end_date')->textInput() ?>
+    <?= $form->field($promoCodeModel, 'end_date')->widget(DatePicker::classname(), [
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'yyyy-mm-dd',
+            ]
+        ]);
+    
+    
+    //$form->field($promoCodeModel, 'end_date')->textInput() ?>
 
     <?= $form->field($promoCodeModel, 'reward')->textInput(['maxlength' => true]) ?>
 

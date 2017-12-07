@@ -72,6 +72,6 @@ class PromoCode extends \yii\db\ActiveRecord
      */
     public function getCities()
     {
-        return $this->hasMany(City::className(), ['id' => 'city_id'])->via('zone');
+        return $this->hasMany(City::className(), ['id' => 'city_id'])->via('zones');
     }
 }
