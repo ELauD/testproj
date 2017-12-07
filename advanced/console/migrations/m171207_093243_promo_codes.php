@@ -49,7 +49,6 @@ class m171207_093243_promo_codes extends Migration
          * Таблица-связка промо кодов с городами
          */
         $this->createTable('promo_zone', [
-            'id' => $this->primaryKey(),
             'promo_id' => $this->integer()->notNull(),
             'city_id' => $this->integer()->notNull(),
         ], $tableOptions);
@@ -63,23 +62,22 @@ class m171207_093243_promo_codes extends Migration
             'start_date' => $this->date()->notNull(),
             'end_date' => $this->date()->notNull(),
             'reward' => $this->money()->notNull(),
-            'zone_id' => $this->integer()->notNull(),
             'status' => $this->boolean()->notNull()->defaultValue(true),
         ], $tableOptions);
 
-        //Создание индекса для столбца zone_id
+        //Создание индекса для столбца promo_id
         $this->createIndex(
-            'idx-promo_code-zone_id',
-            'promo_code',
-            'zone_id'
+            'idx-promo_zone-promo_id',
+            'promo_zone',
+            'promo_id'
         );
 
-        //Добавление внещнего ключа для таблицы 'promo_zone'
+        //Добавление внешнего ключа для таблицы 'promo_code'
         $this->addForeignKey(
-            'fk-promo_code-zone_id',
-            'promo_code',
-            'zone_id',
+            'fk-promo_zone-promo_id',
             'promo_zone',
+            'promo_id',
+            'promo_code',
             'id',
             'CASCADE'
         );
@@ -91,7 +89,7 @@ class m171207_093243_promo_codes extends Migration
             'city_id'
         );
 
-        //Добавление внещнего ключа для таблицы 'city'
+        //Добавление внешнего ключа для таблицы 'city'
         $this->addForeignKey(
             'fk-promo_zone-city_id',
             'promo_zone',
