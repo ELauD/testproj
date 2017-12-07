@@ -14,6 +14,9 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -36,14 +39,26 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'promo-rest',
+                ],
+                'get_discount_info' => 'promo-rest/get-discount-info',
+                'activate_discount' => 'promo-rest/activate-discount',
             ],
+            /* 'showScriptName' => false,
+            'rules' => [
+                ['class' => 'frontend\components\MyClassUrlRule'],
+                '' => 'site/index',
+                '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
+            ], */
+
         ],
-        */
     ],
     'params' => $params,
 ];

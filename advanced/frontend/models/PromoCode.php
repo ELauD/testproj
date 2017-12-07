@@ -26,6 +26,19 @@ class PromoCode extends \yii\db\ActiveRecord
         return 'promo_code';
     }
 
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        $fields += [
+            'zone' => function ($model) {
+                return $model->cities;
+            },
+        ];
+
+        return $fields;
+    }
+
     /**
      * @inheritdoc
      */
