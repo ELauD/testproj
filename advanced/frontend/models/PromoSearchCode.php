@@ -48,11 +48,7 @@ class PromoSearchCode extends PromoCode
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> [
-                'defaultOrder' => [
-                    'id' => SORT_DESC
-                ]
-            ]
+            'sort' => false
         ]);
 
         $this->load($params);
@@ -73,6 +69,8 @@ class PromoSearchCode extends PromoCode
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title]);
+
+        $query->orderBy(['id' => SORT_DESC]);
 
         return $dataProvider;
     }

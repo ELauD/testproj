@@ -30,11 +30,10 @@ class PromoZone extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            // [['promo_id', 'city_id'], 'required'],
-            [['city_id'], 'required'],
-            // [['promo_id', 'city_id'], 'integer'],
-            [['city_id'], 'integer'],
+            [['promo_id', 'city_id'], 'required'],
+            [['promo_id', 'city_id'], 'integer'],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'id']],
+            [['promo_id'], 'exist', 'skipOnError' => true, 'targetClass' => PromoCode::className(), 'targetAttribute' => ['promo_id' => 'id']],
         ];
     }
 

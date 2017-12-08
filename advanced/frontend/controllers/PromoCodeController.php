@@ -66,7 +66,7 @@ class PromoCodeController extends Controller
      */
     public function actionCreate()
     {
-        $promoCodeModel = new PromoCode();
+        $promoCodeModel = new PromoCode(['scenario' => PromoCode::SCENARIO_CREATE]);
         $promoZoneModel = new PromoZone();
         
         $transaction = Yii::$app->db->beginTransaction();
@@ -138,6 +138,7 @@ class PromoCodeController extends Controller
 
 
         $promoCodeModel = $this->findModel($id);
+        $promoCodeModel->scenario = PromoCode::SCENARIO_UPDATE;
 
         if ($promoCodeModel->status == false) {
             throw new ForbiddenHttpException('Access denied');

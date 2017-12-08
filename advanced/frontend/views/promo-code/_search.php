@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PromoSearchCode */
@@ -9,29 +10,50 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="promo-code-search">
-
+<div class = "row">
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'title') ?>
+    <div class="col-md-3 col-sm-3">
+        <?= $form->field($model, 'title') ?>
+    </div>
 
-    <?= $form->field($model, 'start_date') ?>
+    <div class="col-md-3 col-sm-3">
+        <?= $form->field($model, 'start_date')->widget(DatePicker::classname(), [
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd',
+                ]
+            ]); ?>
+    </div>
+    
+    <div class="col-md-3 col-sm-3">
+        <?= $form->field($model, 'end_date')->widget(DatePicker::classname(), [
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd',
+                ]
+            ]); ?>
+    </div>
 
-    <?= $form->field($model, 'end_date') ?>
-
-    <?= $form->field($model, 'reward') ?>
+    <div class="col-md-3 col-sm-3">
+        <?= $form->field($model, 'reward') ?>
+    </div>
 
     <?php // echo $form->field($model, 'zone_id') ?>
 
-    <?php // echo $form->field($model, 'status') ?>
+    <div class="col-md-3 col-sm-3">
+        <?= $form->field($model, 'status') ?>
+    </div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+    <div class="form-group col-md-12 col-sm-12">
+        <?= Html::submitButton('Поиск', ['class' => 'btn btn-primary']) ?>
+        <?= Html::button('Очистить', ['class' => 'btn btn-default', 'id' => 'reset']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>
+</div>
+<br><br><br>

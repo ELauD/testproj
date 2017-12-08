@@ -26,6 +26,43 @@ class PromoCode extends \yii\db\ActiveRecord
         return 'promo_code';
     }
 
+    const SCENARIO_CREATE = 'create';
+    const SCENARIO_UPDATE = 'update';
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_CREATE => ['title', 'start_date', 'end_date', 'reward'],
+            self::SCENARIO_UPDATE => ['title', 'start_date', 'end_date', 'reward', 'status'],
+        ];
+    }
+
+    
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['title', 'start_date', 'end_date', 'reward'], 'required'],
+            [['status'], 'required', 'on' => 'update'],
+            [['title'], 'unique'],
+            [['title'], 'match', 'pattern' => '/^[a-zA-Z0-9]+$/'],
+            [['start_date','end_date'], 'date', 'format' => 'php:Y-m-d'],
+            [['start_date'],'validateDates'],
+            [['reward'], 'match', 'pattern'=>'/^[0-9]{1,19}(\.[0-9]{0,4})?$/'],
+            [['reward'], 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'double'],
+            [['status'], 'boolean'],
+        ];
+    }
+
+    public function validateDates()
+    {
+        if(strtotime($this->end_date) <= strtotime($this->start_date)){
+            $this->addError('start_date','Дата начала не должна быть позже даты окончания или совпадать с ней');
+        }
+    }
+    
     public function fields()
     {
         $fields = parent::fields();
@@ -38,25 +75,8 @@ class PromoCode extends \yii\db\ActiveRecord
 
         return $fields;
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            // [['title', 'start_date', 'end_date', 'reward', 'zone_id'], 'required'],
-            [['title', 'start_date', 'end_date', 'reward'], 'required'],
-            [['start_date', 'end_date'], 'safe'],
-            [['reward'], 'number'],
-            // [['zone_id', 'status'], 'integer'],
-            [['status'], 'integer'],
-            [['title'], 'string', 'max' => 255],
-            [['title'], 'unique'],
-            //[['zone_id'], 'exist', 'skipOnError' => true, 'targetClass' => PromoZone::className(), 'targetAttribute' => ['zone_id' => 'id']],
-        ];
-    }
-
+    
+    
     /**
      * @inheritdoc
      */

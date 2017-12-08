@@ -1,0 +1,10 @@
+actor: ApiTester
+# modules:
+#     enabled:
+#         - \frontend\tests\Helper\Api
+modules:
+    enabled:
+        - REST:
+            url: http://testproj.local
+            depends: PhpBrowser
+            part: Json
